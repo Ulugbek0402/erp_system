@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'erp',
     'drf_yasg',
+    'configapp',
 ]
 
 REST_FRAMEWORK = {
