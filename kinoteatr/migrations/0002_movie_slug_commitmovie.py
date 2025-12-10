@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('erp', '0001_initial'),
+        ('kinoteatr', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('create_ed', models.DateField(auto_now_add=True)),
                 ('update_ed', models.DateTimeField(auto_now=True)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('movie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='erp.movie')),
+                ('movie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='kinoteatr.movie')),
             ],
         ),
     ]

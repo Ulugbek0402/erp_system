@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from erp.models import Actor, Movie, CommitMovie
+from kinoteatr.models import Actor, Movie, CommitMovie
 
 
 class ActorSerializer(serializers.ModelSerializer):

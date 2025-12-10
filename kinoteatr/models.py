@@ -3,6 +3,15 @@ from django.utils.text import slugify
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 from django.contrib.auth import get_user_model
+from django.db import models
+from django.conf import settings
+
+class SomeModel(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='something',
+    )
 
 User = get_user_model()
 

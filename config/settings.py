@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'erp',
+    'kinoteatr',
     'drf_yasg',
     'configapp',
+    'erp',
+
 ]
 
 REST_FRAMEWORK = {
@@ -52,6 +54,19 @@ REST_FRAMEWORK = {
 'rest_framework.permissions.IsAuthenticated',
 ]
 }
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'JWT tokenni quyidagicha kiriting: Bearer <your_token>',
+        }
+    },
+    'USE_SESSION_AUTH': False,  # Bu juda muhim
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -112,10 +127,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'udavlatboyev@gmail.com'
+EMAIL_HOST_PASSWORD = 'eufx zvop bbri sljd'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
-
+#AUTH_USER_MODEL = 'erp.User'
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'

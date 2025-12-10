@@ -1,18 +1,14 @@
-from idlelib.query import CustomRun
-
-from django.shortcuts import render
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import status, viewsets
-from rest_framework.decorators import api_view, action
+from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from erp.models import *
-from erp.serializers import *
-
+from kinoteatr.models import *
+from kinoteatr.serializers import *
 
 # @swagger_auto_schema(
 #     method='get',

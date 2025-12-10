@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('year', models.IntegerField()),
                 ('photo', models.ImageField(blank=True, null=True, upload_to='photos/%Y/%m/%d')),
                 ('genre', models.CharField(max_length=50)),
-                ('actor', models.ManyToManyField(to='erp.actor')),
+                ('actor', models.ManyToManyField(to='kinoteatr.actor')),
             ],
         ),
     ]
