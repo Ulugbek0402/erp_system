@@ -120,3 +120,7 @@ class CommitSerializer(serializers.Serializer):
 
         instance.save()
         return instance
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()

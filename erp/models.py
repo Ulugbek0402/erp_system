@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
@@ -28,29 +29,28 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, password, **extra_fields)
 
 
-class User(AbstractBaseUser, PermissionsMixin):
-
-    username = models.CharField(max_length=50, unique=True)
-    email = models.EmailField(unique=True, null=True, blank=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    is_student = models.BooleanField(default=False)
-    is_teacher = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    objects = CustomUserManager()
-
-    USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = []
-
-    def __str__(self):
-        return self.username
+# class User(AbstractBaseUser, PermissionsMixin):
+#
+#     username = models.CharField(max_length=50, unique=True)
+#     email = models.EmailField(unique=True, null=True, blank=True)
+#     is_active = models.BooleanField(default=True)
+#     is_staff = models.BooleanField(default=False)
+#     is_student = models.BooleanField(default=False)
+#     is_teacher = models.BooleanField(default=False)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+#
+#     objects = CustomUserManager()
+#
+#     USERNAME_FIELD = "username"
+#     REQUIRED_FIELDS = []
+#
+#     def __str__(self):
+#         return self.username
 
 
 class Teacher(models.Model):
 
-    # user = models.OneToOneField("User", on_delete=models.CASCADE, related_name="teacher_profile")
 
     name = models.CharField(max_length=80)
     subject = models.CharField(max_length=80)
@@ -61,7 +61,6 @@ class Teacher(models.Model):
 
 class Student(models.Model):
 
-    # user = models.OneToOneField("User", on_delete=models.CASCADE, related_name="student_profile")
 
     name = models.CharField(max_length=80)
     grade = models.IntegerField()

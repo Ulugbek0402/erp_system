@@ -1,10 +1,5 @@
 from django.urls import path
-from .views import (
-    UserListCreateAPIView, UserDetailAPIView,
-    CategoryListCreateAPIView, CategoryDetailAPIView,
-    NewsListCreateAPIView, NewsDetailAPIView,
-    CommitListCreateAPIView, CommitDetailAPIView,
-)
+from .views import *
 
 urlpatterns = [
     path("users/", UserListCreateAPIView.as_view(), name="user-list-create"),
@@ -15,4 +10,6 @@ urlpatterns = [
     path("news/<int:pk>/", NewsDetailAPIView.as_view(), name="news-detail"),
     path("commits/", CommitListCreateAPIView.as_view(), name="commit-list-create"),
     path("commits/<int:pk>/", CommitDetailAPIView.as_view(), name="commit-detail"),
+    path("auth/", LoginAPIView.as_view(), name="login"),
+    path("logout/", LogoutAPIView.as_view(), name="logout"),
 ]
