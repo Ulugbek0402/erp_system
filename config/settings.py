@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'configapp',
     'erp',
+    'app1',
 
 ]
 
@@ -137,7 +138,7 @@ EMAIL_HOST_PASSWORD = 'eufx zvop bbri sljd'
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
-#AUTH_USER_MODEL = 'erp.User'
+AUTH_USER_MODEL = 'app1.User'
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
