@@ -3,20 +3,24 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 class IsAdmin(BasePermission):
     def has_permission(self, request, view):
-        return bool(request.user and request.user.is_authenticated and getattr(request.user, "is_admin", False))
+        u = request.user
+        return bool(u and u.is_authenticated and getattr(u, "is_admin", False))
 
 
 class IsStaff(BasePermission):
     def has_permission(self, request, view):
-        return bool(request.user and request.user.is_authenticated and getattr(request.user, "is_staff", False))
+        u = request.user
+        return bool(u and u.is_authenticated and getattr(u, "is_staff", False))
 
 
 class IsManager(BasePermission):
     def has_permission(self, request, view):
-        return bool(request.user and request.user.is_authenticated and getattr(request.user, "is_manager", False))
+        u = request.user
+        return bool(u and u.is_authenticated and getattr(u, "is_manager", False))
 
 
 class CommitRolePermission(BasePermission):
+
     def has_permission(self, request, view):
         u = request.user
         if not u or not u.is_authenticated:
@@ -26,7 +30,7 @@ class CommitRolePermission(BasePermission):
             return True
 
         if getattr(u, "is_staff", False):
-            return request.method in (SAFE_METHODS | {"POST"})
+            return request.method in (*SAFE_METHODS, "POST")
 
         if getattr(u, "is_manager", False):
             return request.method in SAFE_METHODS

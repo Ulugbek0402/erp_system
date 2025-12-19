@@ -14,6 +14,9 @@ class UserSerializer(serializers.Serializer):
     is_staff = serializers.BooleanField(required=False)
     is_manager = serializers.BooleanField(required=False)
 
+    class Meta:
+        ref_name = "App1UserSerializer"
+
     def create(self, validated_data):
         password = validated_data.pop("password", None)
         user = User(**validated_data)
@@ -61,6 +64,9 @@ class NewsSerializer(serializers.Serializer):
     views = serializers.IntegerField(required=False)
     category_id = serializers.IntegerField()
 
+    class Meta:
+        ref_name = "App1NewsSerializer"
+
     def create(self, validated_data):
         category_id = validated_data.pop("category_id")
 
@@ -95,6 +101,9 @@ class CommitSerializer(serializers.Serializer):
     news_id = serializers.IntegerField()
     text = serializers.CharField()
     created_at = serializers.DateTimeField(read_only=True)
+
+    class Meta:
+        ref_name = "App1CommitSerializer"
 
     def create(self, validated_data):
         request = self.context["request"]

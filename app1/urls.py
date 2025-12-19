@@ -11,5 +11,4 @@ urlpatterns = [
     path("commits/", CommitListCreateAPIView.as_view(), name="commit-list-create"),
     path("commits/<int:pk>/", CommitDetailAPIView.as_view(), name="commit-detail"),
     path("auth/", LoginAPIView.as_view(), name="login"),
-    path("logout/", LogoutAPIView.as_view(), name="logout"),
 ]

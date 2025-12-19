@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>App1 Login</title>
+  <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+<body>
+  <div class="page">
+    <main class="card">
+      <header class="header">
+        <div class="logo">API</div>
+        <div>
+          <h1>Sign in</h1>
+          <p>Login orqali token oling</p>
+        </div>
+      </header>
+
+      <form id="loginForm" class="form" autocomplete="off">
+        <label class="field">
+          <span>Username</span>
+          <input id="username" name="username" type="text" placeholder="admin" required />
+        </label>
+
+        <label class="field">
+          <span>Password</span>
+          <input id="password" name="password" type="password" placeholder="••••••••" required />
+        </label>
+
+        <button class="btn" type="submit">Login</button>
+
+        <div id="msg" class="msg" aria-live="polite"></div>
+      </form>
+
+      <section class="result">
+        <div class="result-head">
+          <h2>Token</h2>
+          <div class="actions">
+            <button id="copyBtn" class="btn ghost" type="button" disabled>Copy</button>
+            <button id="clearBtn" class="btn ghost" type="button" disabled>Clear</button>
+          </div>
+        </div>
+
+        <pre id="resultBox" class="code">No data yet.</pre>
+
+        <div class="hint">
+          <p><b>Authorization</b> header:</p>
+          <code>Authorization: Token &lt;token&gt;</code>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Endpoint:</span>
+      <code id="endpoint">/app1/login/</code>
+    </footer>
+  </div>
+
+  <script>
+    // 🔧 shu yerda o'zingizni endpointni yozing
+    const LOGIN_URL = "/app1/login/"; // sizning urls.py dagi login path
+
+    const form = document.getElementById("loginForm");
+    const msg = document.getElementById("msg");
+    const resultBox = document.getElementById("resultBox");
+    const copyBtn = document.getElementById("copyBtn");
+    const clearBtn = document.getElementById("clearBtn");
+
+    function setMsg(text, type="info") {
+      msg.className = "msg " + type;
+      msg.textContent = text || "";
+    }
+
+    function setResult(obj) {
+      resultBox.textContent = typeof obj === "string" ? obj : JSON.stringify(obj, null, 2);
+      copyBtn.disabled = false;
+      clearBtn.disabled = false;
+    }
+
+    function clearAll() {
+      setMsg("");
+      resultBox.textContent = "No data yet.";
+      copyBtn.disabled = true;
+      clearBtn.disabled = true;
+      localStorage.removeItem("app1_token");
+    }
+
+    clearBtn.addEventListener("click", clearAll);
+
+    copyBtn.addEventListener("click", async () => {
+      const text = resultBox.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        setMsg("Copied ✅", "ok");
+      } catch (e) {
+        setMsg("Copy failed. Manually copy from box.", "warn");
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      setMsg("Logging in...", "info");
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch(LOGIN_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+
+        const

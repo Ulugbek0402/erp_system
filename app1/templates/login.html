@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model, authenticate
-from django.shortcuts import get_object_or_404, render
-from django.views.decorators.cache import never_cache
+from django.shortcuts import get_object_or_404
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -279,7 +278,7 @@ class LoginAPIView(APIView):
         username = ser.validated_data["username"]
         password = ser.validated_data["password"]
 
-        user = authenticate(request=request, username=username, password=password)
+        user = authenticate(username=username, password=password)
         if not user:
             return Response(
                 {"detail": "Login yoki parol noto‘g‘ri"},
@@ -293,9 +292,20 @@ class LoginAPIView(APIView):
                 "token": token.key,
                 "user_id": user.id,
                 "username": user.username,
-                "is_admin": getattr(user, "is_admin", False),
-                "is_staff": getattr(user, "is_staff", False),
-                "is_manager": getattr(user, "is_manager", False),
+                "is_admin": user.is_admin,
+                "is_staff": user.is_staff,
+                "is_manager": user.is_manager,
             },
             status=status.HTTP_200_OK,
         )
+
+
+class LogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @swagger_auto_schema(tags=["app1/login"])
+    def post(self, request):
+        # token yo'q bo'lsa xato chiqmasin
+        if hasattr(request.user, "auth_token"):
+            request.user.auth_token.delete()
+        return Response({"detail": "Logged out"}, status=status.HTTP_200_OK)

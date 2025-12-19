@@ -69,5 +69,7 @@ class Commit(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+
+
     def __str__(self):
         return f"{self.user.username} -> {self.news.title} ({self.created_at:%Y-%m-%d})"
